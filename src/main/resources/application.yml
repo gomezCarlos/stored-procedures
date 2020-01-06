@@ -1,0 +1,16 @@
+## Spring DATASOURCE (DataSourceAutoConfiguration & DataSourceProperties)
+spring:
+  datasource:
+    url: "jdbc:postgresql://10.10.25.157:5432/postgres"
+    username: postgres
+    password: 23people
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        default_schema: carlos
+
+
+
+
