@@ -7,9 +7,14 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.ParameterMode;
+import javax.persistence.StoredProcedureParameter;
 import javax.persistence.NamedStoredProcedureQuery;
 
-@NamedStoredProcedureQuery(name="findEmptyCourses", procedureName="carlos.findemptycourses", resultClasses = {Course.class})
+@NamedStoredProcedureQuery(name="findEmptyCourses", procedureName="carlos.FETCH_EMPTY_COURSES", resultClasses = {Course.class},
+parameters= {
+		@StoredProcedureParameter(type = void.class, mode=ParameterMode.REF_CURSOR)
+})
 
 @Entity
 public class Course {

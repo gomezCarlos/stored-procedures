@@ -3,16 +3,27 @@ package com.example.demosp;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.ParameterMode;
+import javax.persistence.StoredProcedureQuery;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-@Service
+@Service(value="courseService")
 public class CourseServiceImpl implements CourseService {
-
-	@Autowired
+	
 	private CourseRepository courseRepository;
+	private EntityManager entityManager;
+	
+	@Autowired
+	public CourseServiceImpl(CourseRepository courseRepository, EntityManager entityManager) {
+		this.courseRepository = courseRepository;
+		this.entityManager = entityManager;
+	}
 	
 	@Override
 	public Course findById(Long id) {
@@ -21,12 +32,14 @@ public class CourseServiceImpl implements CourseService {
 		new NotFoundException());
 	}
 
+	@Transactional
 	@Override
 	public Course save(Course course) {
 		
 		return courseRepository.save(course);
 	}
 	
+	@Transactional
 	@Override
 	public void delete(Long id) {
 		courseRepository.deleteById(id);
@@ -39,23 +52,26 @@ public class CourseServiceImpl implements CourseService {
 		return courses;
 	}
 
-	public CourseRepository getCourseRepository() {
-		return courseRepository;
-	}
-
-	public void setCourseRepository(CourseRepository courseRepository) {
-		this.courseRepository = courseRepository;
-	}
-
 	@Override
 	public Page<Course> getCourses(Pageable pageable) {
 		
 		return courseRepository.findAll(pageable);
 	}
 
+	@Transactional
 	@Override
 	public List<Course> findEmptyCourses(){
 		
-		return courseRepository.findEmptyCourses();
+		StoredProcedureQuery query = entityManager
+				.createStoredProcedureQuery("fetch_empty_courses")
+				.registerStoredProcedureParameter(
+				    1,
+				    void.class,
+				    ParameterMode.REF_CURSOR
+				);
+				 
+				@SuppressWarnings("unchecked")
+				List<Course> resultList = query.getResultList();
+				return resultList;
 	}
 }
