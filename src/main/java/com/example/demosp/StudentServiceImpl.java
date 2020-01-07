@@ -3,20 +3,18 @@ package com.example.demosp;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service(value="studentService")
+@Service
 @Primary
 public class StudentServiceImpl implements StudentService {
 
 	private StudentRepository studentRepository;
 
-	@Autowired
 	public StudentServiceImpl(StudentRepository studentRepository) {
 		super();
 		this.studentRepository = studentRepository;

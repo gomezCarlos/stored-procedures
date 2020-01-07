@@ -7,19 +7,17 @@ import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureQuery;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service(value="courseService")
+@Service
 public class CourseServiceImpl implements CourseService {
 	
 	private CourseRepository courseRepository;
 	private EntityManager entityManager;
 	
-	@Autowired
 	public CourseServiceImpl(CourseRepository courseRepository, EntityManager entityManager) {
 		this.courseRepository = courseRepository;
 		this.entityManager = entityManager;
