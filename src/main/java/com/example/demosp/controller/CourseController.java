@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,6 +23,7 @@ import com.example.demosp.domain.Student;
 import com.example.demosp.service.CourseService;
 import com.example.demosp.service.StudentService;
 
+@RequestMapping(path="/api/v1/courses")
 @RestController
 public class CourseController {
 
@@ -34,12 +36,12 @@ public class CourseController {
 		this.studentService = studentService;
 	}
 
-	@PostMapping(path = "/courses",consumes = MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(path = "",consumes = MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Course> saveCourse(@RequestBody Course course) {
 		return new ResponseEntity<>(courseService.save(course), HttpStatus.CREATED);
 	}
 
-	@GetMapping(path = "courses/{id}/{studentId}", produces=MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = "/{id}/{studentId}", produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Course> addStudent(@PathVariable Long id, @PathVariable Long studentId) {
 		Course course = courseService.findById(id);
 
@@ -50,13 +52,13 @@ public class CourseController {
 		return new ResponseEntity<>(course, HttpStatus.OK);
 	}
 
-	@GetMapping(path = "/courses/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = "/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Course> getCourse(@PathVariable Long id) {
 		Course oldCourse = courseService.findById(id);
 		return new ResponseEntity<>(oldCourse, HttpStatus.OK);
 	}
 
-	@PutMapping(path = "/courses/{id}",consumes = MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	@PutMapping(path = "/{id}",consumes = MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Course> updateCourse(@PathVariable Long id, @RequestBody Course course) {
 		Course oldCourse = courseService.findById(id);
 		oldCourse.setCode(course.getCode());
@@ -64,19 +66,19 @@ public class CourseController {
 		return new ResponseEntity<>(courseService.save(oldCourse), HttpStatus.OK);
 	}
 
-	@GetMapping(path = "/courses", produces=MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = "", produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Page<Course>> getPaginatedCourses(@RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "size", defaultValue = "10") int size) {
 		Page<Course> pageable = courseService.getCourses(PageRequest.of(page, size));
 		return new ResponseEntity<>(pageable, HttpStatus.OK);
 	}
 
-	@GetMapping(path = "/courses/all", produces=MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = "/all", produces=MediaType.APPLICATION_JSON_VALUE)
 	public List<Course> getAllCourses() {
 		return courseService.findAll();
 	}
 
-	@GetMapping(path = "/courses/empty", produces=MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = "/empty", produces=MediaType.APPLICATION_JSON_VALUE)
 	public CourseResponse getEmptyCourses() {
 		CourseResponse result = new CourseResponse();
 		List<Course> empty = courseService.findEmptyCourses();
@@ -84,7 +86,7 @@ public class CourseController {
 		return result;
 	}
 
-	@DeleteMapping(path = "/courses/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
+	@DeleteMapping(path = "/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Course> deleteCourse(Long id) {
 		Course oldCourse = courseService.findById(id);
 		courseService.delete(id);

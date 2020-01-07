@@ -14,12 +14,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demosp.domain.Student;
 import com.example.demosp.service.StudentService;
 
+@RequestMapping(path="/api/v1/students")
 @RestController
 public class StudentController {
 
@@ -30,30 +32,30 @@ public class StudentController {
 		this.studentService = studentService;
 	}
 
-	@GetMapping(path = "/students", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = {"","/"}, produces = MediaType.APPLICATION_JSON_VALUE)
 	public Object getStudents(@RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "size", defaultValue = "10") int size) {
 		return studentService.getStudents(PageRequest.of(page, size));
 	}
 
-	@GetMapping(path = "/students/all", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Student>> getAllStudents() {
 		return new ResponseEntity<>(studentService.findAll(), HttpStatus.OK);
 
 	}
 
-	@GetMapping(path = "/students/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Student> getStudent(@PathVariable Long id) {
 		Student student = studentService.findById(id);
 		return new ResponseEntity<>(student, HttpStatus.CREATED);
 	}
 
-	@PostMapping(path = "/students", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(path = {"","/"}, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Student> saveStudent(@Valid @RequestBody Student student) {
 		return new ResponseEntity<>(studentService.save(student), HttpStatus.OK);
 	}
 
-	@PutMapping(path = "/students/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Student> updateStudent(@Valid @RequestBody Student student, @PathVariable Long id) {
 		Student oldStudent = studentService.findById(id);
 		oldStudent.setFirstName(student.getFirstName());
@@ -63,7 +65,7 @@ public class StudentController {
 		return new ResponseEntity<>(studentService.save(oldStudent), HttpStatus.OK);
 	}
 
-	@DeleteMapping(path = "/students/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@DeleteMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Student> delete(@PathVariable Long id) {
 		Student oldStudent = studentService.findById(id);
 		studentService.delete(id);
