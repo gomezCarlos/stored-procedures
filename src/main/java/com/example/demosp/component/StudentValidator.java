@@ -1,8 +1,10 @@
-package com.example.demosp;
+package com.example.demosp.component;
 
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
+
+import com.example.demosp.domain.Student;
 
 public class StudentValidator implements Validator {
 

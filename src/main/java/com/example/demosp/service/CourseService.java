@@ -1,8 +1,11 @@
-package com.example.demosp;
+package com.example.demosp.service;
 
 import java.util.List;
 
 import org.springframework.data.domain.Pageable;
+
+import com.example.demosp.domain.Course;
+
 import org.springframework.data.domain.Page;
 
 public interface CourseService {

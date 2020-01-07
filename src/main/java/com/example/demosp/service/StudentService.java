@@ -1,7 +1,9 @@
-package com.example.demosp;
+package com.example.demosp.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+import com.example.demosp.domain.Student;
 
 import java.util.List;
 

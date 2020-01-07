@@ -1,4 +1,4 @@
-package com.example.demosp;
+package com.example.demosp.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +8,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.example.demosp.component.NotFoundException;
+import com.example.demosp.domain.Student;
+import com.example.demosp.repository.StudentRepository;
 
 @Service
 @Primary

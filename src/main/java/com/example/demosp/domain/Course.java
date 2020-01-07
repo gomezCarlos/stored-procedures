@@ -1,4 +1,4 @@
-package com.example.demosp;
+package com.example.demosp.domain;
 
 import java.util.List;
 import java.util.ArrayList;
