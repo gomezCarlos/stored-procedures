@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demosp.domain.Course;
+import com.example.demosp.domain.CourseResponse;
 import com.example.demosp.domain.Student;
 import com.example.demosp.service.CourseService;
 import com.example.demosp.service.StudentService;
@@ -76,8 +77,10 @@ public class CourseController {
 	}
 
 	@GetMapping(path = "/courses/empty", produces=MediaType.APPLICATION_JSON_VALUE)
-	public List<Course> getEmptyCourses() {
-		List<Course> result = courseService.findEmptyCourses();
+	public CourseResponse getEmptyCourses() {
+		CourseResponse result = new CourseResponse();
+		List<Course> empty = courseService.findEmptyCourses();
+		result.getEmptyCourses().addAll(empty);
 		return result;
 	}
 

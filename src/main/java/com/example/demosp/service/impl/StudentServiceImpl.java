@@ -1,4 +1,4 @@
-package com.example.demosp.service;
+package com.example.demosp.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.demosp.component.NotFoundException;
 import com.example.demosp.domain.Student;
 import com.example.demosp.repository.StudentRepository;
+import com.example.demosp.service.StudentService;
 
 @Service
 @Primary

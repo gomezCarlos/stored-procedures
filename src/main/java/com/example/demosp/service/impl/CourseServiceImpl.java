@@ -1,4 +1,4 @@
-package com.example.demosp.service;
+package com.example.demosp.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.demosp.component.NotFoundException;
 import com.example.demosp.domain.Course;
 import com.example.demosp.repository.CourseRepository;
+import com.example.demosp.service.CourseService;
 
 @Service
 public class CourseServiceImpl implements CourseService {
@@ -63,9 +64,8 @@ public class CourseServiceImpl implements CourseService {
 	@Transactional
 	@Override
 	public List<Course> findEmptyCourses(){
-		
 		StoredProcedureQuery query = entityManager
-				.createStoredProcedureQuery("fetch_empty_courses")
+				.createStoredProcedureQuery("fetch_empty_courses", Course.class)
 				.registerStoredProcedureParameter(
 				    1,
 				    void.class,
@@ -74,6 +74,7 @@ public class CourseServiceImpl implements CourseService {
 				 
 				@SuppressWarnings("unchecked")
 				List<Course> resultList = query.getResultList();
+				
 				return resultList;
 	}
 }
